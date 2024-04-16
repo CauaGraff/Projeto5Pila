@@ -24,5 +24,6 @@ Route::prefix("login")->group(function () {
 Route::middleware([])->group(function () {
     Route::prefix("usuario")->group(function () {
         Route::get("/cadastro", [UserController::class, "register"])->name("user.register");
+        Route::post("/register", [UserController::class, "handelRegister"])->name("user.post.register");
     });
 });
