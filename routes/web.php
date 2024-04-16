@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
+Route::prefix("login")->group(function () {
+    Route::get("/", function () {
+        return "tlaçsdkjfaçlskdfj";
+    });
+});
+
+//auth
+Route::middleware([])->group(function () {
+    Route::prefix("usuario")->group(function () {
+        Route::get("/cadastro", [UserController::class, "register"])->name("user.register");
+    });
 });
