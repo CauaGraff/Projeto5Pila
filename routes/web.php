@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,14 +15,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/**LOGIN */
 Route::prefix("login")->group(function () {
-    Route::get("/", function () {
-        return "tlaçsdkjfaçlskdfj";
-    });
+    Route::get("/", [LoginController::class, "index"])->name("login");
+    Route::post("/auth", [LoginController::class, "authenticate"])->name("login.auth");
+    Route::get('/logout', [LoginController::class, "destroy"])->name('login.destroy');
 });
 
-//auth
-Route::middleware([])->group(function () {
+/**DASHBORD */
+Route::middleware(['auth'])->group(function () {
+
+    Route::get("/", function () {
+        dd(auth());
+        return view("home");
+    })->name("home");
+
+    /**USUARIO */
     Route::prefix("usuario")->group(function () {
         Route::get("/cadastro", [UserController::class, "register"])->name("user.register");
         Route::post("/register", [UserController::class, "handelRegister"])->name("user.post.register");

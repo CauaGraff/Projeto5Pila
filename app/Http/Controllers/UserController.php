@@ -43,7 +43,12 @@ class UserController extends Controller
             $newUser->user = $user;
             $newUser->password = password_hash($password, PASSWORD_DEFAULT);
             $newUser->type = 'A';
-            return dd($newUser->save());
+            if ($newUser->save()) {
+                return response()->json([
+                    "type" => "sucess",
+                    "redirect" => route("home")
+                ]);
+            }
         }
     }
 }

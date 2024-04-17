@@ -28,7 +28,9 @@
                 data: $form.serialize(),
                 dataType: "json",
                 success: function (response) {
-                    
+                    if(response.type =="sucess"){
+                        location.href = response.redirect;
+                    }
                 }
             });
         });
