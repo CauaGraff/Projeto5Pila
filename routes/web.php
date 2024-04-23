@@ -26,7 +26,6 @@ Route::prefix("login")->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     Route::get("/", function () {
-        dd(auth());
         return view("home");
     })->name("home");
 

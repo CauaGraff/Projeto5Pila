@@ -22,19 +22,19 @@ class LoginController extends Controller
             'user' => 'required',
             'password' => 'required|min:8'
         ], [
-            'user.required' => 'Esse campo de user é obrigatório',
-            'password.required' => 'Esse campo password é obrigatório',
+            'user.required' => 'Preencha o campo usuario',
+            'password.required' => 'Preencha a senha',
             'password.min' => 'Esse campo tem que ter no mínimo :min caracteres'
         ]);
 
         $user = User::where('user', $request->input('user'))->first();
 
         if (!$user) {
-            return redirect()->route('login')->withErrors(['error' => 'Email or password invalid']);
+            return redirect()->route('login')->withErrors(['error' => 'Usuario ou Senha incorreto']);
         }
 
         if (!password_verify($request->input('password'), $user->password)) {
-            return redirect()->route('login')->withErrors(['error' => 'Email or password invalid']);
+            return redirect()->route('login')->withErrors(['error' => 'Usuario ou Senha incorreto']);
         }
 
         Auth::loginUsingId($user->id);
