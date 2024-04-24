@@ -31,7 +31,9 @@ Route::middleware(['auth'])->group(function () {
 
     /**USUARIO */
     Route::prefix("usuario")->group(function () {
-        Route::get("/cadastro", [UserController::class, "register"])->name("user.register");
+        Route::get("/", [UserController::class, "index"])->name("user.index");
         Route::post("/register", [UserController::class, "handelRegister"])->name("user.post.register");
+        Route::get('/edit/{id}',  [UserController::class, "editar"])->name('user.edit');
+        Route::get('/del/{id}',  [UserController::class, "deletar"])->name('user.del');
     });
 });

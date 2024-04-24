@@ -10,10 +10,6 @@
 
 </head>
 <body class="d-flex justify-content-center align-items-center py-4 bg-body-tertiary" style="height: 100vh">
-  @if (session()->has('success'))
-  {{ session()->get('success') }} 
-  @endif
-
   <div class="card">
     <article class="card-body">
       <h4 class="card-title text-center mb-4 mt-1">Login</h4>
