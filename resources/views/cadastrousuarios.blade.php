@@ -21,7 +21,7 @@
           <input type="hidden" name="id" value="{{$usuario->id ?? ''}}" />
           <div class="form-group col-md-3">
             <label class="control-label">Usuario</label>
-            <input class="form-control" type="text" name="user" value="{{$usuario->email ?? ''}}" placeholder="Insira seu e-mail" autofocus required>
+            <input class="form-control" type="text" name="user" value="{{$usuario->user ?? ''}}" placeholder="Insira seu Usuario" autofocus required>
           </div>
           <div class="form-group col-md-3">
             <label class="control-label">Senha</label>
@@ -31,8 +31,8 @@
             <label class="control-label">Tipo</label>
           <select class="form-select form-select-sm" name="tipo" id="tipo" aria-label=".form-select-sm example">
             <option selected>Selecione o tipo o usuario</option>
-            <option value="Administrador">Administrador</option>
-            <option value="Usuario">Usuario</option>
+            <option value="Administrador"  {{ $usuario->type =="A" ? "selected" : ""}}>Administrador</option>
+            <option value="Usuario"  @if ($usuario->type =="U")selected @endif>Usuario</option>
           </select>
           </div>
           <div class="form-group col-md-4 align-self-end">
