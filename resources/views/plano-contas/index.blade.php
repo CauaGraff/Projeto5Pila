@@ -40,7 +40,7 @@
 
     <h2>Lista de Planos de Contas</h2>
 
-    <table class="table">
+    <table class="table" id="myTable">
         <thead>
             <tr>
                 <th>ID</th>
@@ -70,4 +70,12 @@
         </tbody>
     </table>
 </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function () {
+            $('#myTable').dataTable(); // Initialize DataTable
+        });
+    </script>
 @endsection

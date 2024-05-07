@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ParametroController;
 use App\Http\Controllers\PlanoContasController;
 use App\Http\Controllers\LancamentoCaixaController;
 
@@ -39,7 +40,13 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit/{id}',  [UserController::class, "editar"])->name('user.edit');
         Route::get('/del/{id}',  [UserController::class, "deletar"])->name('user.del');
     });
+
+    /**LANCAMENTOS CAIXA */
     Route::resource('lancamentos-caixa', LancamentoCaixaController::class);
 
+    /**PLANO DE CONTAS */
     Route::resource('plano-contas', PlanoContasController::class);
+
+    /**PARAMETROS SISTEMA */
+    Route::resource('parametros', ParametroController::class);
 });
