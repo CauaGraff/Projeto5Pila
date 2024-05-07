@@ -1,8 +1,10 @@
 <?php
 
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PlanoContasController;
+use App\Http\Controllers\LancamentoCaixaController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,8 +34,12 @@ Route::middleware(['auth'])->group(function () {
     /**USUARIO */
     Route::prefix("usuario")->group(function () {
         Route::get("/", [UserController::class, "index"])->name("user.index");
+        Route::get("/cadastrar", [UserController::class, "cadastrar"])->name("user.cadastrar");
         Route::post("/register", [UserController::class, "handelRegister"])->name("user.post.register");
         Route::get('/edit/{id}',  [UserController::class, "editar"])->name('user.edit');
         Route::get('/del/{id}',  [UserController::class, "deletar"])->name('user.del');
     });
+    Route::resource('lancamentos-caixa', LancamentoCaixaController::class);
+
+    Route::resource('plano-contas', PlanoContasController::class);
 });

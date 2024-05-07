@@ -26,7 +26,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('user.index') }}">Usuarios</a>
               </li>
-    
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('lancamentos-caixa.index') }}">Lancamento Caixa</a>
+              </li>
               {{-- {{-- <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
                 <ul class="dropdown-menu">

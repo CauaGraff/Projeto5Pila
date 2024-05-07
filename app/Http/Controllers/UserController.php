@@ -10,7 +10,7 @@ class UserController extends Controller
     public function index()
     {
         $usuarios = User::all();
-        return view("cadastrousuarios", compact("usuarios"));
+        return view("listausuarios", compact("usuarios"));
     }
 
     public function handelRegister(Request $request)
@@ -74,9 +74,22 @@ class UserController extends Controller
         $usuarios = User::all();
 
         if ($usuario) {
-            return view('cadastrousuarios', compact('usuarios', 'usuario'));
+            return view('cadusuario', compact('usuarios', 'usuario'));
         } else {
             redirect()->route('user.index');
         }
+    }
+
+    public function deletar($id)
+    {
+        $user = User::find($id);
+        if ($user->delete()) {
+            return redirect()->route('user.index');
+        }
+    }
+
+    public function cadastrar()
+    {
+        return view('cadusuario');
     }
 }
