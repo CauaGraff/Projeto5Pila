@@ -13,6 +13,11 @@ class ParametroController extends Controller
         return view('parametros.index', compact('parametros'));
     }
 
+    public function create()
+    {
+        return view('parametros.create');
+    }
+
     public function store(Request $request)
     {
         $request->validate([

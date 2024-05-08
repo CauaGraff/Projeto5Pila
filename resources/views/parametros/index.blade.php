@@ -1,52 +1,21 @@
 @extends('_theme')
 
 @section('content')
-    <h1>Novo Parâmetro</h1>
-
+<div class="row mt-1">
+    <div class="col-md-6">
+        <h1>Lista de Parâmetros</h1>
+    </div>
+    <div class="col-md-6">
+        <a href="{{ route('parametros.create') }}" class="btn btn-primary float-md-end">Cadastrar Parâmetro</a>
+    </div>
+</div>
     @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     @endif
-
-    <form action="{{ route('parametros.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="descricao">Descrição:</label>
-            <input type="text" name="descricao" id="descricao" class="form-control" value="{{ old('descricao') }}">
-            @error('descricao')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class="form-group">
-            <label for="indice">Índice:</label>
-            <input type="text" name="indice" id="indice" class="form-control" value="{{ old('indice') }}">
-            @error('indice')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class="form-group">
-            <label for="p_v">Porcentagem/Valor:</label>
-            <select name="p_v" id="p_v" class="form-control">
-                <option value="P">Porcentagem</option>
-                <option value="V">Valor</option>
-            </select>
-            @error('p_v')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <div class="form-group">
-            <label for="aplicacao">Aplicação:</label>
-            <input type="text" name="aplicacao" id="aplicacao" class="form-control" value="{{ old('aplicacao') }}">
-            @error('aplicacao')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
-        <button type="submit" class="btn btn-primary">Salvar</button>
-    </form>
-
-    <hr>
-
-    <h1>Lista de Parâmetros</h1>
-    <table class="table">
+    <table class="table" id="myTable" style="width: 100%">
         <thead>
             <tr>
                 <th>ID</th>
@@ -77,4 +46,14 @@
             @endforeach
         </tbody>
     </table>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready( function () {
+    $('#myTable').DataTable();
+    $('.alert').delay(5000).fadeOut('slow');
+
+} );
+    </script>
 @endsection

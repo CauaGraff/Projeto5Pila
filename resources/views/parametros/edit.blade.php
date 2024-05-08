@@ -7,23 +7,23 @@
     <form action="{{ route('parametros.update', $parametro) }}" method="POST">
         @csrf
         @method('PUT')
-        <div class="form-group">
-            <label for="descricao">Descrição:</label>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição:</label>
             <input type="text" name="descricao" id="descricao" class="form-control" value="{{ $parametro->descricao }}">
         </div>
-        <div class="form-group">
-            <label for="indice">Índice:</label>
+        <div class="mb-3">
+            <label for="indice" class="form-label">Índice:</label>
             <input type="text" name="indice" id="indice" class="form-control" value="{{ $parametro->indice }}">
         </div>
-        <div class="form-group">
-            <label for="p_v">Porcentagem/Valor:</label>
-            <select name="p_v" id="p_v" class="form-control">
+        <div class="mb-3">
+            <label for="p_v" class="form-label">Porcentagem/Valor:</label>
+            <select name="p_v" id="p_v" class="form-select">
                 <option value="porcentagem" {{ $parametro->p_v === 'porcentagem' ? 'selected' : '' }}>Porcentagem</option>
                 <option value="valor" {{ $parametro->p_v === 'valor' ? 'selected' : '' }}>Valor</option>
             </select>
         </div>
-        <div class="form-group">
-            <label for="aplicacao">Aplicação:</label>
+        <div class="mb-3">
+            <label for="aplicacao" class="form-label">Aplicação:</label>
             <input type="text" name="aplicacao" id="aplicacao" class="form-control" value="{{ $parametro->aplicacao }}">
         </div>
         <button type="submit" class="btn btn-primary">Atualizar</button>
