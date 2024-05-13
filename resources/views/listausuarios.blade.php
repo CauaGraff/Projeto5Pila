@@ -9,7 +9,7 @@
 
     </div>
       <div class="table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped" id="myTable">
           <thead>
             <tr>
               <th>#</th>
@@ -40,4 +40,17 @@
 
   </div>
 </div>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function () {
+            $('#myTable').dataTable({
+        layout: {
+        topStart: {
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        }
+    }    }); // Initialize DataTable
+        });
+    </script>
 @endsection

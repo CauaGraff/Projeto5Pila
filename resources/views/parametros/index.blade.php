@@ -51,7 +51,12 @@
 @section('js')
     <script>
         $(document).ready( function () {
-    $('#myTable').DataTable();
+    $('#myTable').DataTable({
+        layout: {
+        topStart: {
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        }
+    }    });
     $('.alert').delay(5000).fadeOut('slow');
 
 } );

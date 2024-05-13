@@ -6,10 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class ContasPlanoContas extends Model
 {
+    protected $table = 'contas_plano_contas';
+
     protected $fillable = ['descricao', 'tipo', 'agrupamento'];
 
     public function lancamentos()
     {
-        return $this->hasMany(LancamentosCaixas::class, 'conta_id');
+        return $this->belongsTo(LancamentosCaixas::class);
     }
 }

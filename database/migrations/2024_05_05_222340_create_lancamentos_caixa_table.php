@@ -26,6 +26,7 @@ return new class extends Migration
             $table->decimal('acrescimos', 10, 2)->default(0.00);
             $table->decimal('descontos', 10, 2)->default(0.00);
             $table->timestamps();
+            $table->foreign('conta_id')->references('id')->on('contas_plano_contas');
         });
     }
 

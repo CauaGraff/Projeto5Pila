@@ -28,7 +28,8 @@ class LancamentoCaixaController extends Controller
     public function create()
     {
         $contas = ContasPlanoContas::all();
-        return view('lancamentos-caixa.create', compact("contas"));
+        $lancamentos = LancamentosCaixas::all();
+        return view('lancamentos-caixa.create', compact("contas", "lancamentos"));
     }
 
     /**

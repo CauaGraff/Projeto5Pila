@@ -9,8 +9,10 @@ class UserController extends Controller
 {
     public function index()
     {
-        $usuarios = User::all();
-        return view("listausuarios", compact("usuarios"));
+        if (auth()->user()->type != "U") {
+            $usuarios = User::all();
+            return view("listausuarios", compact("usuarios"));
+        }
     }
 
     public function handelRegister(Request $request)

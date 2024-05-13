@@ -75,7 +75,12 @@
 @section('js')
     <script>
         $(document).ready(function () {
-            $('#myTable').dataTable(); // Initialize DataTable
+            $('#myTable').dataTable({
+        layout: {
+        topStart: {
+            buttons: ['copy', 'csv', 'excel', 'pdf', 'print']
+        }
+    }    }); // Initialize DataTable
         });
     </script>
 @endsection
