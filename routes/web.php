@@ -43,6 +43,8 @@ Route::middleware(['auth'])->group(function () {
 
     /**LANCAMENTOS CAIXA */
     Route::resource('lancamentos-caixa', LancamentoCaixaController::class);
+    Route::put('lancamentos-caixa/{id}/baixa', [LancamentoCaixaController::class, 'baixa'])->name('lancamentos-caixa.baixa');
+
 
     /**PLANO DE CONTAS */
     Route::resource('plano-contas', PlanoContasController::class);

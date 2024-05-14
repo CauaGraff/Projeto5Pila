@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ContasPlanoContas;
+use Carbon\Carbon;
+use App\Models\Parametro;
 use Illuminate\Http\Request;
 use App\Models\LancamentoCaixa;
+use App\Models\ContasPlanoContas;
 use App\Models\LancamentosCaixas;
 
 class LancamentoCaixaController extends Controller
@@ -50,8 +52,14 @@ class LancamentoCaixaController extends Controller
         ]);
 
         // Criação do lançamento de caixa
-        LancamentosCaixas::create($request->all());
-
+        $novoLancamento = new LancamentosCaixas();
+        $novoLancamento->data = $request->data;
+        $novoLancamento->historico = $request->historico;
+        $novoLancamento->valor = $request->valor;
+        $novoLancamento->tipo = $request->tipo;
+        $novoLancamento->conta_id = $request->conta_id;
+        $novoLancamento->data_vencimento = $request->data;
+        $novoLancamento->save();
         return redirect()->route('lancamentos-caixa.index')
             ->with('success', 'Lançamento de caixa criado com sucesso.');
     }
@@ -65,7 +73,9 @@ class LancamentoCaixaController extends Controller
     public function edit($id)
     {
         $lancamento = LancamentosCaixas::findOrFail($id);
-        return view('lancamentos-caixa.edit', compact('lancamento'));
+        $contas = ContasPlanoContas::all();
+
+        return view('lancamentos-caixa.edit', compact('lancamento', 'contas'));
     }
 
     /**
@@ -119,5 +129,46 @@ class LancamentoCaixaController extends Controller
 
         return redirect()->route('lancamentos-caixa.index')
             ->with('success', 'Lançamento de caixa excluído com sucesso.');
+    }
+    public function baixa($id)
+    {
+        $lancamento = LancamentosCaixas::findOrFail($id);
+        $hoje = Carbon::now();
+
+        if (!$lancamento->data_baixa) {
+            $dataVencimento = Carbon::parse($lancamento->data_vencimento);
+            $diasAtraso = $dataVencimento->diffInDays($hoje, false);
+
+            $jurosParametro = Parametro::where('descricao', 'Juros')->first();
+            $multaParametro = Parametro::where('descricao', 'Multa')->first();
+            $descontoParametro = Parametro::where('descricao', 'Descontos')->first();
+
+            $juros = 0;
+            $multa = 0;
+            $desconto = 0;
+
+            if ($diasAtraso > 0) {
+                // Calcular juros e multa
+                if ($jurosParametro && $jurosParametro->p_v === 'P') {
+                    $juros = $lancamento->valor * $jurosParametro->indice * $diasAtraso / 100;
+                }
+                if ($multaParametro && $multaParametro->p_v === 'P') {
+                    $multa = $lancamento->valor * $multaParametro->indice / 100;
+                }
+            } elseif ($diasAtraso < 0) {
+                // Calcular desconto
+                if ($descontoParametro && $descontoParametro->p_v === 'P') {
+                    $desconto = $lancamento->valor * $descontoParametro->indice / 100;
+                }
+            }
+
+            $lancamento->data_baixa = $hoje;
+            $lancamento->juros = $juros;
+            $lancamento->acrescimos = $multa;  // Assumindo que multa é considerada como acréscimo
+            $lancamento->descontos = $desconto;
+            $lancamento->save();
+        }
+
+        return redirect()->route('lancamentos-caixa.index')->with('success', 'Lançamento baixado com sucesso!');
     }
 }
