@@ -171,4 +171,9 @@ class LancamentoCaixaController extends Controller
 
         return redirect()->route('lancamentos-caixa.index')->with('success', 'Lançamento baixado com sucesso!');
     }
+
+    public function gerarParcelas()
+    {
+        return view('lancamentos-caixa.index');
+    }
 }

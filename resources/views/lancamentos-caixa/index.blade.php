@@ -7,6 +7,7 @@
     </div>
     <div class="col-md-6">
         <a href="{{ route('lancamentos-caixa.create') }}" class="btn btn-primary float-md-end">Cadastrar Lancamento</a>
+        <a href="{{ route('lancamentos-caixa.parcelas') }}" class="btn btn-primary float-md-end">Gerar Parcelas</a>
     </div>
 </div>
     @if(session('success'))

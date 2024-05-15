@@ -32,8 +32,6 @@
         <div class="form-group">
             <label for="conta_id">Conta:</label>
             <select name="conta_id" class="form-control" required>
-                <!-- Aqui você pode carregar as opções de contas do seu banco de dados -->
-                <!-- Por exemplo, você pode percorrer uma lista de contas e exibir cada uma como uma opção -->
                 @foreach($contas as $conta)
                     <option value="{{ $conta->id }}">{{ $conta->descricao }}</option>
                 @endforeach
