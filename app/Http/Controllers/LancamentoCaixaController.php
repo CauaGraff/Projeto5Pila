@@ -11,6 +11,10 @@ use App\Models\LancamentosCaixas;
 
 class LancamentoCaixaController extends Controller
 {
+    public function formParcelas()
+    {
+        return view('lancamentos-caixa.parcelas');
+    }
     /**
      * Exibe uma lista dos lançamentos de caixa.
      *
@@ -170,10 +174,5 @@ class LancamentoCaixaController extends Controller
         }
 
         return redirect()->route('lancamentos-caixa.index')->with('success', 'Lançamento baixado com sucesso!');
-    }
-
-    public function gerarParcelas()
-    {
-        return view('lancamentos-caixa.index');
     }
 }

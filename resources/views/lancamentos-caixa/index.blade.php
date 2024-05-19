@@ -7,7 +7,7 @@
     </div>
     <div class="col-md-6">
         <a href="{{ route('lancamentos-caixa.create') }}" class="btn btn-primary float-md-end">Cadastrar Lancamento</a>
-        <a href="{{ route('lancamentos-caixa.parcelas') }}" class="btn btn-primary float-md-end">Gerar Parcelas</a>
+        <a href="{{ route('parcelas.index') }}" class="btn btn-primary float-md-end">Gerar Parcelas</a>
     </div>
 </div>
     @if(session('success'))
@@ -16,7 +16,11 @@
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
     </div>
     @endif
-    <table class="table" id="myTable" style="width: 100%">
+    <div>
+        <label for="dateRange">Filtrar por Data: </label>
+        <input type="text" id="dateRange" name="dateRange">
+    </div>
+    <table class="table" id="exemplo" style="width: 100%">
         <thead>
             <tr>
                 <th>Nº</th>
@@ -79,21 +83,62 @@
 @endsection
 
 @section('js')
-    <script>
-        $(document).ready( function () {
-    $('#myTable').DataTable({
-        layout: {
-        topStart: {
-            buttons: ['csv', 'excel', 'pdf']
-        }
-    },
-    responsive: true
-  
-   }
-    );
-    
-    $('.alert').delay(5000).fadeOut('slow');
+  <script>
+        $(document).ready(function() {
+            var table = $('#exemplo').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'csvHtml5',
+                    {
+                        extend: 'pdfHtml5',
+                        download: 'open',
+                        customize: function (doc) {
+                            doc.content[1].table.widths = 
+                                Array(doc.content[1].table.body[0].length + 1).join('*').split('');
+                        }
+                    },
+                   'print'
+                ],
+                paging: true,
+                searching: true,
+                ordering: true,
+                info: true,
+                lengthMenu: [5, 10, 25, 50, 100],
+                responsive: true,
+                
+            });
 
-} );
+            $('#dateRange').daterangepicker({
+                locale: {
+                    format: 'DD/MM/YYYY'
+                },
+                autoUpdateInput: false
+            });
+
+            $('#dateRange').on('apply.daterangepicker', function(ev, picker) {
+                $(this).val(picker.startDate.format('DD/MM/YYYY') + ' - ' + picker.endDate.format('DD/MM/YYYY'));
+                $.fn.dataTable.ext.search.push(
+                    function(settings, data, dataIndex) {
+                        var min = picker.startDate.format('DD/MM/YYYY');
+                        var max = picker.endDate.format('DD/MM/YYYY');
+                        var date = data[7];
+                        if ((min === '' && max === '') ||
+                            (min === '' && date <= max) ||
+                            (min <= date && max === '') ||
+                            (min <= date && date <= max)) {
+                            return true;
+                        }
+                        return false;
+                    }
+                );
+                table.draw();
+            });
+
+            $('#dateRange').on('cancel.daterangepicker', function(ev, picker) {
+                $(this).val('');
+                $.fn.dataTable.ext.search.pop();
+                table.draw();
+            });
+        });
     </script>
 @endsection
