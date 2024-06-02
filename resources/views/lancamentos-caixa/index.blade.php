@@ -86,24 +86,23 @@
   <script>
         $(document).ready(function() {
             var table = $('#exemplo').DataTable({
-                dom: 'Bfrtip',
-                buttons: [
-                    'csvHtml5',
-                    {
-                        extend: 'pdfHtml5',
-                        download: 'open',
-                        customize: function (doc) {
-                            doc.content[1].table.widths = 
-                                Array(doc.content[1].table.body[0].length + 1).join('*').split('');
-                        }
-                    },
-                   'print'
-                ],
+                dom: 'Bftip',
+                buttons: ["pageLength",{
+                    extend: 'csv',
+                    exportOptions: {
+                        columns: [0, 1, 2,3, 4,5,6,7,8,9,10]
+                    }
+                }, {
+                    extend: 'pdf',
+                    exportOptions: {
+                        columns: [0, 1, 2,3, 4,5,6,7,8,9,10]
+                    }                    ,
+                    margin: [ 10, 10, 10, 10 ]
+                }],
                 paging: true,
                 searching: true,
                 ordering: true,
                 info: true,
-                lengthMenu: [5, 10, 25, 50, 100],
                 responsive: true,
                 
             });
